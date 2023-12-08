@@ -1,5 +1,7 @@
+'use client'
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
+import { signIn, signOut } from 'next-auth/react'
 
 export default function SignUp() {
   return (
@@ -28,10 +30,11 @@ export default function SignUp() {
         </Input.Root>
         <div className="mt-2 flex flex-col">
           <Button.Root>
-            <Button.Control type="submit">Cadastrar</Button.Control>
+            <Button.Control type="submit">Entrar</Button.Control>
           </Button.Root>
         </div>
       </form>
+      <button onClick={() => signIn()}>Sign in</button>
     </div>
   )
 }
