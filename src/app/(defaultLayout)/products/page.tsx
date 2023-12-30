@@ -1,14 +1,17 @@
 'use client'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import React from 'react'
 
-export default function Home() {
-  const { data: session } = useSession()
+const Products: React.FC = () => {
+  const { data: session, status } = useSession()
   console.log('Home session', session)
+  console.log('status', status)
   if (session) {
     return (
       <div className="bg-slate-500">
         Signed in as {session?.user?.email} <br />
         <button onClick={() => signOut()}>Sign out</button>
+        <div>products</div>
       </div>
     )
   }
@@ -20,3 +23,5 @@ export default function Home() {
     </>
   )
 }
+
+export default Products

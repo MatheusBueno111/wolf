@@ -2,7 +2,9 @@ import { ComponentProps } from 'react'
 import { VariantProps, tv } from 'tailwind-variants'
 
 const button = tv({
-  base: ['rounded-md px-4 py-2 text-sm font-semibold outline-none shadow-sm'],
+  base: [
+    'flex flex-row items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold shadow-sm outline-none',
+  ],
 
   variants: {
     variant: {
@@ -32,7 +34,7 @@ type ButtonRootProps = ComponentProps<'div'>
 
 function ButtonRoot({ children, ...props }: ButtonRootProps) {
   return (
-    <div {...props} className="flex flex-grow justify-center">
+    <div {...props} className="flex	flex-grow items-center justify-center">
       {children}
     </div>
   )

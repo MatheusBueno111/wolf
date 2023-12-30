@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, ForwardedRef, forwardRef } from 'react'
 
 type InputPrefix = ComponentProps<'div'>
 
@@ -6,16 +6,19 @@ function InputPrefix(props: InputPrefix) {
   return <div {...props} />
 }
 
-type InputControl = ComponentProps<'input'>
+type InputControlProps = ComponentProps<'input'>
 
-function InputControl(props: InputControl) {
-  return (
-    <input
-      {...props}
-      className="flex w-full border-0 bg-transparent text-zinc-900 placeholder-zinc-400 outline-none placeholder:text-sm"
-    />
-  )
-}
+const InputControl = forwardRef<HTMLInputElement, InputControlProps>(
+  function InputControl(props, ref: ForwardedRef<HTMLInputElement>) {
+    return (
+      <input
+        {...props}
+        ref={ref}
+        className="flex w-full border-0 bg-transparent text-zinc-900 placeholder-zinc-400 outline-none placeholder:text-sm"
+      />
+    )
+  },
+)
 
 type InputRootProps = ComponentProps<'div'>
 
