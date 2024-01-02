@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 const LoginUserFormSchema = z.object({
@@ -34,7 +35,6 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<LoginUserFormData>({
     resolver: zodResolver(LoginUserFormSchema),
     defaultValues: {
@@ -45,17 +45,14 @@ export default function SignUp() {
 
   const onLogin: SubmitHandler<LoginUserFormData> = async (data, event) => {
     event?.preventDefault()
-    console.log('data', data)
     const onLoginData = await signIn('credentials', {
       email: data.email,
       password: data.password,
       redirect: false,
     })
-    console.log('onLoginData', onLoginData)
+
     if (onLoginData?.error) {
-      console.log('error', onLoginData)
-    } else {
-      router.push('/products')
+      toast.error('Email e/ou senha estão errados')
     }
   }
 
@@ -72,6 +69,9 @@ export default function SignUp() {
         <Input.Root>
           <Input.Control placeholder="email" {...register('email')} />
         </Input.Root>
+        {errors.email && (
+          <span className="text-xs text-red-500">{errors.email.message}</span>
+        )}
         <div className="mt-5 flex justify-between text-sm">
           <label htmlFor="" className="text-md font-semibold">
             Senha
@@ -83,6 +83,7 @@ export default function SignUp() {
             Esqueceu a senha?
           </a>
         </div>
+
         <Input.Root>
           <Input.Control
             type="password"
@@ -90,6 +91,11 @@ export default function SignUp() {
             {...register('password')}
           />
         </Input.Root>
+        {errors.password && (
+          <span className="text-xs text-red-500">
+            {errors.password.message}
+          </span>
+        )}
         <div className="mt-2 flex flex-col">
           <Button.Root className="w-full	">
             <Button.Control type="submit">Entrar</Button.Control>

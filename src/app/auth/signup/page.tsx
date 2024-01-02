@@ -8,6 +8,7 @@ import * as z from 'zod'
 import GoogleIcon from '@/components/icons/GoogleIcon'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
 
 const CreateUserFormSchema = z
   .object({
@@ -54,15 +55,14 @@ export default function SignUp() {
       })
 
       if (response.ok) {
-        const data = await response.json()
-        console.log('User created:', data)
         router.push('/auth/signin')
+        toast.success('Usuário criado')
         reset()
       } else {
         throw new Error('Failed to create user')
       }
     } catch (error) {
-      console.error(error)
+      toast.error('Erro')
     }
   }
 

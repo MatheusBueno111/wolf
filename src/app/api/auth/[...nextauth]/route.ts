@@ -56,8 +56,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
   events: {
-    signIn: async ({ user, account, isNewUser, profile }) => {
-      console.log('events')
+    signIn: async ({ user, account }) => {
       if (account?.provider === 'google') {
         try {
           const response = await fetch('http://localhost:3000/api/user', {
