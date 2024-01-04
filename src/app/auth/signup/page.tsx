@@ -46,23 +46,33 @@ export default function SignUp() {
   const createUser: SubmitHandler<CreateUserFormData> = async (data, event) => {
     event?.preventDefault()
     try {
-      const response = await fetch('/api/user', {
-        method: 'POST',
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      })
+      const response = await createUserRequest(data)
 
-      if (response.ok) {
-        router.push('/auth/signin')
-        toast.success('Usuário criado')
-        reset()
-      } else {
-        throw new Error('Failed to create user')
-      }
+      handleResponse(response)
     } catch (error) {
-      toast.error('Erro')
+      toast.error('Erro ao criar usuário')
+    }
+  }
+
+  const createUserRequest = async (data: CreateUserFormData) => {
+    return await fetch('/api/user', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: data.email,
+        password: data.password,
+      }),
+    })
+  }
+
+  const handleResponse = (response: Response) => {
+    if (response.ok) {
+      router.push('/auth/signin')
+      toast.success('Usuário criado')
+      reset()
+    } else if (response.status === 409) {
+      toast.warning('Email já em uso!')
+    } else {
+      throw new Error('Falha ao criar usuário')
     }
   }
 

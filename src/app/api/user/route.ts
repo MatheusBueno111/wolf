@@ -40,7 +40,6 @@ export const GET = async () => {
 export const POST = async (req: Request) => {
   try {
     const body = await req.json()
-    console.log('body', body)
     const { email, password } = userSchema.parse(body)
 
     const existingUserByEmail = await userExists(email)
