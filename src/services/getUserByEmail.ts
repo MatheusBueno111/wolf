@@ -12,7 +12,6 @@ export const getUserByEmailService = async ({
         email,
       },
     })
-    console.log('user', user)
     if (!user) {
       return {
         user: null,

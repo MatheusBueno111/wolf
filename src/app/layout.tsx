@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { SessionProvider } from '@/providers/SessionProvider'
 import { Inter } from 'next/font/google'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,6 +26,7 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <div className="min-h-screen bg-zinc-50">{children}</div>
         </SessionProvider>
+        <ToastContainer autoClose={1500} />
       </body>
     </html>
   )
